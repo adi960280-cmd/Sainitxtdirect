@@ -15,7 +15,7 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         caption = (
             f"⚙️ <b>Choose Button below to Set Settings</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("📝 Caption Style", callback_data="caption_style_command"), InlineKeyboardButton("🖋️ File Name", callback_data="file_name_command")],
@@ -40,7 +40,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"🖼️ <b>Choose Button below to set Thumbnail</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("🎥 Video", callback_data="viideo_thumbnail_command"), InlineKeyboardButton("📑 PDF", callback_data="pddf_thumbnail_command")],
@@ -61,7 +61,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"💦 <b>Choose Button below to set Watermark</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("🎥 Video", callback_data="video_wateermark_command"), InlineKeyboardButton("📑 PDF", callback_data="pdf_wateermark_command")],
@@ -81,7 +81,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"🔐 <b>Choose Button below to set Token</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Classplus", callback_data="cp_token_command")],
@@ -127,13 +127,13 @@ def register_settings_handlers(bot):
         try:
             if input_msg.text.lower() == "/cc1":
                 globals.caption = '/cc1'
-                await editable.edit(f"✅ Caption Style 1 Updated!", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Caption Style 1 Updated!</b>", reply_markup=keyboard)
             elif input_msg.text.lower() == "/cc2":
                 globals.caption = '/cc2'
-                await editable.edit(f"✅ Caption Style 2 Updated!", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Caption Style 2 Updated!</b>", reply_markup=keyboard)
             else:
                 globals.caption = input_msg.text
-                await editable.edit(f"✅ Caption Style 3 Updated!", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Caption Style 3 Updated!</b>", reply_markup=keyboard)
             
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Caption Style:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
@@ -154,10 +154,10 @@ def register_settings_handlers(bot):
         try:
             if input_msg.text.lower() == "/d":
                 globals.endfilename = '/d'
-                await editable.edit(f"✅ End File Name Disabled !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ End File Name Disabled!</b>", reply_markup=keyboard)
             else:
                 globals.endfilename = input_msg.text
-                await editable.edit(f"✅ End File Name `{globals.endfilename}` is enabled!", reply_markup=keyboard)            
+                await editable.edit(f"<b>✅ End File Name `{globals.endfilename}` is enabled!</b>", reply_markup=keyboard)            
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set End File Name:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -169,22 +169,22 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Video Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n"
             f"<blockquote><b>💵 Note - For document format send : /no</b></blockquote>", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
                 globals.thumb = input_msg.text
-                await editable.edit(f"✅ Thumbnail set successfully from the URL !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Thumbnail set successfully from the URL !</b>", reply_markup=keyboard)
             elif input_msg.text.lower() == "/d":
                 globals.thumb = "/d"
-                await editable.edit(f"✅ Thumbnail set to default !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Thumbnail set to default !</b>", reply_markup=keyboard)
             else:
                 globals.thumb = input_msg.text
-                await editable.edit(f"✅ Video in Document Format is enabled !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Video in Document Format is enabled !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set video thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -196,18 +196,18 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Pdf Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
                 globals.pthumb = input_msg.text
-                await editable.edit(f"✅ Pdf Thumbnail set successfully from the URL !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Pdf Thumbnail set successfully from the URL !</b>", reply_markup=keyboard)
             else:
                 globals.pthumb = "/d"
-                await editable.edit(f"✅ Pdf Thumbnail disabled !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Pdf Thumbnail disabled !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set pdf thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -220,18 +220,18 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Audio Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
                 globals.mthumb = input_msg.text
-                await editable.edit(f"✅ Audio Thumbnail set successfully from the URL !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Audio Thumbnail set successfully from the URL !</b>", reply_markup=keyboard)
             else:
                 globals.mthumb = "/d"
-                await editable.edit(f"✅ Audio Thumbnail disabled !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Audio Thumbnail disabled !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set audio thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -244,18 +244,18 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Html Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
                 globals.hthumb = input_msg.text
-                await editable.edit(f"✅ Html Thumbnail set successfully from the URL !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Html Thumbnail set successfully from the URL !</b>", reply_markup=keyboard)
             else:
                 globals.hthumb = "/d"
-                await editable.edit(f"✅ Html Thumbnail disabled !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Html Thumbnail disabled !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set html thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -276,10 +276,10 @@ def register_settings_handlers(bot):
         try:
             if input_msg.text.lower() == "/d":
                 globals.CR = f"{CREDIT}"
-                await editable.edit(f"✅ Credit set to default !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Credit set to default !</b>", reply_markup=keyboard)
             else:
                 globals.CR = input_msg.text
-                await editable.edit(f"✅ Credit set as {globals.CR} !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Credit set as {globals.CR} !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Credit:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -291,13 +291,13 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="set_token_command")]])
         editable = await callback_query.message.edit(
             f"👑 <b>Classplus Token</b> 👑\n"
-            f"✪━━━━━━★━━━━━━✪\n"
+            f"✪━━━━━━★★★━━━━━━✪\n"
             f"🔐 <b>Send Your CP Token</b>\n"
-            f"✪━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             globals.cptoken = input_msg.text
-            await editable.edit(f"✅ Classplus Token set successfully !\n\n<blockquote expandable>`{globals.cptoken}`</blockquote>", reply_markup=keyboard)
+            await editable.edit(f"<b>✅ Classplus Token set successfully !</b>\n\n<blockquote expandable>`{globals.cptoken}`</blockquote>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Classplus Token:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -309,13 +309,13 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="set_token_command")]])
         editable = await callback_query.message.edit(
             f"👑 <b>Physics Wallah Token</b> 👑\n"
-            f"✪━━━━━━━━★━━━━━━━━✪\n"
+            f"✪━━━━━━★★★━━━━━━✪\n"
             f"🔐 <b>Send Your PW Token</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             globals.pwtoken = input_msg.text
-            await editable.edit(f"✅ Physics Wallah Token set successfully !\n\n<blockquote expandable>`{globals.pwtoken}`</blockquote>", reply_markup=keyboard) 
+            await editable.edit(f"<b>✅ Physics Wallah Token set successfully !</b>\n\n<blockquote expandable>`{globals.pwtoken}`</blockquote>", reply_markup=keyboard) 
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Physics Wallah Token:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -335,10 +335,10 @@ def register_settings_handlers(bot):
         try:
             if input_msg.text.lower() == "/d":
                 globals.cwtoken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjQyMzg3OTEsImNvbiI6eyJpc0FkbWluIjpmYWxzZSwiYXVzZXIiOiJVMFZ6TkdGU2NuQlZjR3h5TkZwV09FYzBURGxOZHowOSIsImlkIjoiZEUxbmNuZFBNblJqVEROVmFWTlFWbXhRTkhoS2R6MDkiLCJmaXJzdF9uYW1lIjoiYVcxV05ITjVSemR6Vm10ak1WUlBSRkF5ZVNzM1VUMDkiLCJlbWFpbCI6Ik5Ga3hNVWhxUXpRNFJ6VlhiR0ppWTJoUk0wMVdNR0pVTlU5clJXSkRWbXRMTTBSU2FHRnhURTFTUlQwPSIsInBob25lIjoiVUhVMFZrOWFTbmQ1ZVcwd1pqUTViRzVSYVc5aGR6MDkiLCJhdmF0YXIiOiJLM1ZzY1M4elMwcDBRbmxrYms4M1JEbHZla05pVVQwOSIsInJlZmVycmFsX2NvZGUiOiJOalZFYzBkM1IyNTBSM3B3VUZWbVRtbHFRVXAwVVQwOSIsImRldmljZV90eXBlIjoiYW5kcm9pZCIsImRldmljZV92ZXJzaW9uIjoiUShBbmRyb2lkIDEwLjApIiwiZGV2aWNlX21vZGVsIjoiU2Ftc3VuZyBTTS1TOTE4QiIsInJlbW90ZV9hZGRyIjoiNTQuMjI2LjI1NS4xNjMsIDU0LjIyNi4yNTUuMTYzIn19.snDdd-PbaoC42OUhn5SJaEGxq0VzfdzO49WTmYgTx8ra_Lz66GySZykpd2SxIZCnrKR6-R10F5sUSrKATv1CDk9ruj_ltCjEkcRq8mAqAytDcEBp72-W0Z7DtGi8LdnY7Vd9Kpaf499P-y3-godolS_7ixClcYOnWxe2nSVD5C9c5HkyisrHTvf6NFAuQC_FD3TzByldbPVKK0ag1UnHRavX8MtttjshnRhv5gJs5DQWj4Ir_dkMcJ4JaVZO3z8j0OxVLjnmuaRBujT-1pavsr1CCzjTbAcBvdjUfvzEhObWfA1-Vl5Y4bUgRHhl1U-0hne4-5fF0aouyu71Y6W0eg'
-                await editable.edit(f"✅ Carrerwill Token set successfully as default !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Carrerwill Token set successfully as default !</b>", reply_markup=keyboard)
             else:
                 globals.cwtoken = input_msg.text
-                await editable.edit(f"✅ Carrerwill Token set successfully !\n\n<blockquote expandable>`{globals.cwtoken}`</blockquote>", reply_markup=keyboard)      
+                await editable.edit(f"<b>✅ Carrerwill Token set successfully !</b>\n\n<blockquote expandable>`{globals.cwtoken}`</blockquote>", reply_markup=keyboard)      
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Careerwill Token:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -354,8 +354,8 @@ def register_settings_handlers(bot):
             f"💦 <b>Send your Watermark Text\n"
             f"✔️ Send /d to Skip</b>\n"
             f"✪━━━━━━━━━★━━━━━━━━━✪\n"
-            f"<blockquote>This feature is not working yet.\n"
-            f"Only settings save for future</blockquote>\n"
+            f"<blockquote><b>This feature is not working yet.\n"
+            f"Only settings save for future</b></blockquote>\n"
             f"✪━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
@@ -364,7 +364,7 @@ def register_settings_handlers(bot):
                 await editable.edit(f"**Pdf Watermark Disabled ✅** !", reply_markup=keyboard)
             else:
                 globals.pdfwatermark = input_msg.text
-                await editable.edit(f"Pdf Watermark `{globals.pdfwatermark}` enabled ✅!", reply_markup=keyboard)
+                await editable.edit(f"<b>Pdf Watermark `{globals.pdfwatermark}` enabled ✅!</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set pdf Watermark:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -376,10 +376,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
         editable = await callback_query.message.edit(
             f"🎥 <u><b>Video Watermark Settings</b></u> 🎥\n"
-            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
+            f"✪━━━━━━━━━━★★★━━━━━━━━━━✪\n"
             f"💦 <b>Send your Watermark Text\n"
-            f"✔️ Send /d to Skip</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+            f"✔️ Send /d to Skip watermark</b>\n"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.lower() == "/d":
@@ -387,7 +387,7 @@ def register_settings_handlers(bot):
                 await editable.edit(f"**Video Watermark Disabled ✅** !", reply_markup=keyboard)
             else:
                 globals.vidwatermark = input_msg.text
-                await editable.edit(f"Video Watermark `{globals.vidwatermark}` enabled ✅!", reply_markup=keyboard)
+                await editable.edit(f"<b>Video Watermark `{globals.vidwatermark}` enabled ✅!</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Watermark:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -402,7 +402,7 @@ def register_settings_handlers(bot):
             f"🎥 <b>Enter Video Quality</b>\n"
             f"━━━━━━━━━━━⚡━━━━━━━━━━━\n"
             f"🎮  `144`  |  `240`  |  `360`  |  `480`  |  `720`  |  `1080`\n"
-            f"✔️ Send /d for default\n"
+            f"✔️ Send /d for default quality\n"
             f"━━━━━━━━━━━━━━━━━━━━━━━", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
@@ -463,7 +463,7 @@ def register_settings_handlers(bot):
                 await editable.edit(f"**Topic enabled in Caption ✅** !", reply_markup=keyboard)
             else:
                 globals.topic = input_msg.text
-                await editable.edit(f"Topic disabled in Caption ✅!", reply_markup=keyboard)
+                await editable.edit(f"<b>Topic disabled in Caption ✅!</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to set Topic in Caption:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
@@ -492,9 +492,9 @@ def register_settings_handlers(bot):
                 globals.quality = '480p'
                 globals.res = '854x480'
                 globals.topic = '/d'
-                await editable.edit(f"✅ Settings reset as default !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Settings reset as default !</b>", reply_markup=keyboard)
             else:
-                await editable.edit(f"✅ Settings Not Changed !", reply_markup=keyboard)
+                await editable.edit(f"<b>✅ Settings Not Changed !</b>", reply_markup=keyboard)
         except Exception as e:
             await editable.edit(f"<b>❌ Failed to Change Settings:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
