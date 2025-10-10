@@ -27,22 +27,9 @@ from vars import API_ID, API_HASH, BOT_TOKEN, OWNER, CREDIT, AUTH_USERS, TOTAL_U
 async def drm_handler(bot: Client, m: Message):
     globals.processing_request = True
     globals.cancel_requested = False
-    caption = globals.caption
-    endfilename = globals.endfilename
-    thumb = globals.thumb
-    pthumb = globals.pthumb
-    mthumb = globals.mthumb
-    hthumb = globals.hthumb
-    CR = globals.CR
-    cwtoken = globals.cwtoken
-    cptoken = globals.cptoken
-    pwtoken = globals.pwtoken
-    vidwatermark = globals.vidwatermark
-    pdfwatermark = globals.pdfwatermark
-    raw_text2 = globals.raw_text2
-    quality = globals.quality
-    res = globals.res
-    topic = globals.topic
+    (caption, endfilename, thumb, pthumb, mthumb, hthumb, CR, cwtoken, cptoken, pwtoken, vidwatermark, pdfwatermark, raw_text2, quality, res, topic) = (
+        globals.caption, globals.endfilename, globals.thumb, globals.pthumb, globals.mthumb, globals.hthumb, globals.CR, globals.cwtoken, globals.cptoken, globals.pwtoken, globals.vidwatermark, globals.pdfwatermark, globals.raw_text2, globals.quality, globals.res, globals.topic
+        )
 
     user_id = m.from_user.id
     if m.document and m.document.file_name.endswith('.txt'):
