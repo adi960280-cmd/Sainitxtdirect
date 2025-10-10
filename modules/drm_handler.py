@@ -183,30 +183,12 @@ async def drm_handler(bot: Client, m: Message):
             b_name = '**Link Input**'
             path = os.path.join("downloads", "Free Batch")
             await editable.delete()
-        
-    if thumb.startswith("http://") or thumb.startswith("https://"):
-        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
-        thumb = "thumb.jpg"
-    else:
-        thumb = thumb
 
-    if pthumb.startswith("http://") or pthumb.startswith("https://"):
-        getstatusoutput(f"wget '{pthumb}' -O 'pthumb.jpg'")
-        pthumb = "pthumb.jpg"
-    else:
-        pthumb = pthumb
-
-    if mthumb.startswith("http://") or mthumb.startswith("https://"):
-        getstatusoutput(f"wget '{mthumb}' -O 'mthumb.jpg'")
-        mthumb = "mthumb.jpg"
-    else:
-        mthumb = mthumb
-
-    if hthumb.startswith("http://") or hthumb.startswith("https://"):
-        getstatusoutput(f"wget '{hthumb}' -O 'hthumb.jpg'")
-        hthumb = "hthumb.jpg"
-    else:
-        hthumb = hthumb
+#........................................................................................................................................................................................
+    thumb  = (getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")[1] or 'thumb.jpg') if thumb.startswith(('http://', 'https://')) else thumb
+    pthumb = (getstatusoutput(f"wget '{pthumb}' -O 'pthumb.jpg'")[1] or 'pthumb.jpg') if pthumb.startswith(('http://', 'https://')) else pthumb
+    mthumb = (getstatusoutput(f"wget '{mthumb}' -O 'mthumb.jpg'")[1] or 'mthumb.jpg') if mthumb.startswith(('http://', 'https://')) else mthumb
+    hthumb = (getstatusoutput(f"wget '{hthumb}' -O 'hthumb.jpg'")[1] or 'hthumb.jpg') if hthumb.startswith(('http://', 'https://')) else hthumb
 #........................................................................................................................................................................................
     try:
         if m.document and raw_text == "1":
