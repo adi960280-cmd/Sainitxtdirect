@@ -46,7 +46,7 @@ def register_youtube_handlers(bot):
     async def ytm_handler(bot: Client, m: Message):
         globals.processing_request = True
         globals.cancel_requested = False
-        pthumb = globals.pthumb
+        mthumb = globals.mthumb
         editable = await m.reply_text("**Input Type**\n\n<blockquote><b>01 •Send me the .txt file containing YouTube links\n02 •Send Single link or Set of YouTube multiple links</b></blockquote>")
         input: Message = await bot.listen(editable.chat.id)
         if input.document and input.document.file_name.endswith(".txt"):
