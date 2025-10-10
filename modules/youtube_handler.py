@@ -115,11 +115,11 @@ def register_youtube_handlers(bot):
                 audio_title = audio_title.replace("_", " ")
                 name = f'{audio_title[:60]} {CREDIT}'        
                 name1 = f'{audio_title} {CREDIT}'
-                if pthumb.startswith("http://") or pthumb.startswith("https://"):
-                    getstatusoutput(f"wget '{pthumb}' -O 'pthumb.jpg'")
-                    pthumb = "pthumb.jpg"
+                if mthumb.startswith("http://") or mthumb.startswith("https://"):
+                    getstatusoutput(f"wget '{mthumb}' -O 'mthumb.jpg'")
+                    mthumb = "mthumb.jpg"
                 else:
-                    pthumb = pthumb
+                    mthumb = mthumb
 
                 if "youtube.com" in url or "youtu.be" in url:
                     prog = await m.reply_text(f"<i><b>Audio Downloading</b></i>\n<blockquote><b>{str(count).zfill(3)}) {name1}</b></blockquote>")
@@ -129,10 +129,10 @@ def register_youtube_handlers(bot):
                     if os.path.exists(f'{name}.mp3'):
                         await prog.delete(True)
                         print(f"File {name}.mp3 exists, attempting to send...")
-                        if pthumb == "/d":
-                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'**🎵 Title : **[{str(count).zfill(3)}] - {name1}.mp3\n\n🔗**Video link** : {url}\n\n🌟** Extracted By **: {CREDIT}')
+                        if mthumb == "/d":
+                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}. - {name1}.mp3]({url})')
                         else:
-                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'**🎵 Title : **[{str(count).zfill(3)}] - {name1}.mp3\n\n🔗**Video link** : {url}\n\n🌟** Extracted By **: {CREDIT}', thumb=pthumb)
+                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}. - {name1}.mp3]({url})', thumb=mthumb)
                         os.remove(f'{name}.mp3')
                         count+=1
                     else:
