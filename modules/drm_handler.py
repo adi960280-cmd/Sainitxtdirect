@@ -31,6 +31,8 @@ async def drm_handler(bot: Client, m: Message):
     endfilename = globals.endfilename
     thumb = globals.thumb
     pthumb = globals.pthumb
+    mthumb = globals.mthumb
+    hthumb = globals.hthumb
     CR = globals.CR
     cwtoken = globals.cwtoken
     cptoken = globals.cptoken
@@ -193,6 +195,18 @@ async def drm_handler(bot: Client, m: Message):
         pthumb = "pthumb.jpg"
     else:
         pthumb = pthumb
+
+    if mthumb.startswith("http://") or mthumb.startswith("https://"):
+        getstatusoutput(f"wget '{mthumb}' -O 'mthumb.jpg'")
+        mthumb = "mthumb.jpg"
+    else:
+        mthumb = mthumb
+
+    if hthumb.startswith("http://") or hthumb.startswith("https://"):
+        getstatusoutput(f"wget '{hthumb}' -O 'hthumb.jpg'")
+        hthumb = "hthumb.jpg"
+    else:
+        hthumb = hthumb
 #........................................................................................................................................................................................
     try:
         if m.document and raw_text == "1":
@@ -507,7 +521,10 @@ async def drm_handler(bot: Client, m: Message):
                         cmd = f'yt-dlp -o "{namef}.{ext}" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.{ext}', caption=ccm)
+                        if mthumb == "/d":
+                            copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.{ext}', caption=ccm)
+                        else:
+                            copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.{ext}', caption=ccm, thumb=mthumb)
                         count += 1
                         os.remove(f'{namef}.{ext}')
                     except FloodWait as e:
