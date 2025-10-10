@@ -45,6 +45,7 @@ def register_youtube_handlers(bot):
     async def ytm_handler(bot: Client, m: Message):
         globals.processing_request = True
         globals.cancel_requested = False
+        pthumb = globals.pthumb
         editable = await m.reply_text("**Input Type**\n\n<blockquote><b>01 •Send me the .txt file containing YouTube links\n02 •Send Single link or Set of YouTube multiple links</b></blockquote>")
         input: Message = await bot.listen(editable.chat.id)
         if input.document and input.document.file_name.endswith(".txt"):
@@ -113,6 +114,11 @@ def register_youtube_handlers(bot):
                 audio_title = audio_title.replace("_", " ")
                 name = f'{audio_title[:60]} {CREDIT}'        
                 name1 = f'{audio_title} {CREDIT}'
+                if pthumb.startswith("http://") or pthumb.startswith("https://"):
+                    getstatusoutput(f"wget '{pthumb}' -O 'pthumb.jpg'")
+                    pthumb = "pthumb.jpg"
+                else:
+                    pthumb = pthumb
 
                 if "youtube.com" in url or "youtu.be" in url:
                     prog = await m.reply_text(f"<i><b>Audio Downloading</b></i>\n<blockquote><b>{str(count).zfill(3)}) {name1}</b></blockquote>")
@@ -122,13 +128,12 @@ def register_youtube_handlers(bot):
                     if os.path.exists(f'{name}.mp3'):
                         await prog.delete(True)
                         print(f"File {name}.mp3 exists, attempting to send...")
-                        try:
+                        if pthumb == "/d":
                             await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'**🎵 Title : **[{str(count).zfill(3)}] - {name1}.mp3\n\n🔗**Video link** : {url}\n\n🌟** Extracted By **: {CREDIT}')
-                            os.remove(f'{name}.mp3')
-                            count+=1
-                        except Exception as e:
-                            await m.reply_text(f'⚠️**Downloading Failed**⚠️\n**Name** =>> `{str(count).zfill(3)} {name1}`\n**Url** =>> {url}', disable_web_page_preview=True)
-                            count+=1
+                        else:
+                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'**🎵 Title : **[{str(count).zfill(3)}] - {name1}.mp3\n\n🔗**Video link** : {url}\n\n🌟** Extracted By **: {CREDIT}', thumb=pthumb)
+                        os.remove(f'{name}.mp3')
+                        count+=1
                     else:
                         await prog.delete(True)
                         await m.reply_text(f'⚠️**Downloading Failed**⚠️\n**Name** =>> `{str(count).zfill(3)} {name1}`\n**Url** =>> {url}', disable_web_page_preview=True)
