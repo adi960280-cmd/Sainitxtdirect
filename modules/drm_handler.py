@@ -66,15 +66,7 @@ async def drm_handler(bot: Client, m: Message):
             await bot.send_message(m.chat.id, f"<blockquote>__**Oopss! You are not a Premium member\nPLEASE /upgrade YOUR PLAN\nSend me your user id for authorization\nYour User id**__ - `{m.chat.id}`</blockquote>\n")
             return
 
-    pdf_count = 0
-    img_count = 0
-    v2_count = 0
-    mpd_count = 0
-    m3u8_count = 0
-    yt_count = 0
-    drm_count = 0
-    zip_count = 0
-    other_count = 0
+    pdf_count = img_count = v2_count = mpd_count = m3u8_count = yt_count = drm_count = zip_count = other_count = 0
     
     links = []
     for i in lines:
@@ -245,9 +237,7 @@ async def drm_handler(bot: Client, m: Message):
                     oembed_data = response.json()
                     audio_title = oembed_data.get('title', 'YouTube Video')
                     audio_title = audio_title.replace("_", " ")
-                    name = f'{audio_title[:60]}'
-                    name1 = f'{audio_title[:60]}'
-                    namef = f'{audio_title[:60]}'
+                    name = name1 = namef = f'{audio_title[:60]}'
                 else:
                     name = f'{name1[:60]}'
                     namef = f'{name1[:60]}'
@@ -255,29 +245,14 @@ async def drm_handler(bot: Client, m: Message):
                 if topic == "/yes":
                     raw_title = links[i][0]
                     t_match = re.search(r"[\(\[]([^\)\]]+)[\)\]]", raw_title)
-                    if t_match:
-                        t_name = t_match.group(1).strip()
-                        v_name = re.sub(r"^[\(\[][^\)\]]+[\)\]]\s*", "", raw_title)
-                        v_name = re.sub(r"[\(\[][^\)\]]+[\)\]]", "", v_name)
-                        v_name = re.sub(r":.*", "", v_name).strip()
-                    else:
-                        t_name = "Untitled"
-                        v_name = re.sub(r":.*", "", raw_title).strip()
-                    
-                    if endfilename == "/d":
-                        name = f'{str(count).zfill(3)}) {name1[:60]}'
-                        namef = f'{v_name}'
-                    else:
-                        name = f'{str(count).zfill(3)}) {name1[:60]} {endfilename}'
-                        namef = f'{v_name} {endfilename}'
+                    t_name = t_match.group(1).strip() if t_match else "Untitled"
+                    v_name = re.sub(r"^[\(\[][^\)\]]+[\)\]]\s*|[\(\[][^\)\]]+[\)\]]|:.*", "", raw_title).strip()
+                    name = f'{str(count).zfill(3)}) {name1[:60]}' + (f' {endfilename}' if endfilename != "/d" else "")
+                    namef = v_name + (f' {endfilename}' if endfilename != "/d" else "")
                 else:
-                    if endfilename == "/d":
-                        name = f'{str(count).zfill(3)}) {name1[:60]}'
-                        namef = f'{name1[:60]}'
-                    else:
-                        name = f'{str(count).zfill(3)}) {name1[:60]} {endfilename}'
-                        namef = f'{name1[:60]} {endfilename}'
-                        
+                    name = f'{str(count).zfill(3)}) {name1[:60]}' + (f' {endfilename}' if endfilename != "/d" else "")
+                    namef = name1[:60] + (f' {endfilename}' if endfilename != "/d" else "")
+           
 #........................................................................................................................................................................................
             if "visionias" in url:
                 async with ClientSession() as session:
