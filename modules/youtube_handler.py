@@ -192,6 +192,6 @@ def register_youtube_handlers(bot):
         with open(txt_file, 'w') as f:
             f.write('\n'.join(videos))
 
-        await message.reply_document(document=txt_file, caption=f'<a href="{youtube_link}">__**Click Here to Open Link**__</a>\n<blockquote>{title}.txt</blockquote>\n')
+        await message.reply_document(document=txt_file, caption=f'<a href="{youtube_link}">__**Click Here to Open Link**__</a>\n<blockquote><b>{title}.txt</b></blockquote>\n')
         os.remove(txt_file)
     
