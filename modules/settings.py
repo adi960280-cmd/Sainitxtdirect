@@ -181,7 +181,7 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"✪━━━━━━━★━━━━━━━✪\n"
-            f"🖼️ <u><b>Thumbnail Settings</b></u>\n"
+            f"🖼️ <u><b>Video Thumbnail Settings</b></u>\n"
             f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
@@ -199,21 +199,34 @@ def register_settings_handlers(bot):
                 globals.thumb = input_msg.text
                 await editable.edit(f"✅ Video in Document Format is enabled !", reply_markup=keyboard)
         except Exception as e:
-            await editable.edit(f"<b>❌ Failed to set thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
+            await editable.edit(f"<b>❌ Failed to set video thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
             await input_msg.delete()
 # .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
     @bot.on_callback_query(filters.regex("pddf_thumbnail_command"))
     async def pdf_thumbnail_button(client, callback_query):
-      keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
-      caption = ("<b>⋅ This Feature is Not Working Yet ⋅</b>")
-      await callback_query.message.edit_media(
-        InputMediaPhoto(
-            media="https://envs.sh/GVI.jpg",
-            caption=caption
-        ),
-        reply_markup=keyboard
-      )
+      user_id = callback_query.from_user.id
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
+        editable = await callback_query.message.edit(
+            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"🖼️ <u><b>Pdf Thumbnail Settings</b></u>\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"🔗 <b>Send Thumbnail URL\n"
+            f"✔️ Send /d for default</b>\n"
+            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+        input_msg = await bot.listen(editable.chat.id)
+        try:
+            if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
+                globals.pthumb = input_msg.text
+                await editable.edit(f"✅ Pdf Thumbnail set successfully from the URL !", reply_markup=keyboard)
+            else:
+                globals.pthumb = "/d"
+                await editable.edit(f"✅ Pdf Thumbnail disabled !", reply_markup=keyboard)
+        except Exception as e:
+            await editable.edit(f"<b>❌ Failed to set pdf thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
+        finally:
+            await input_msg.delete()
+            
 # .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
     @bot.on_callback_query(filters.regex("add_credit_command"))
     async def credit(client, callback_query):
@@ -301,9 +314,36 @@ def register_settings_handlers(bot):
         finally:
             await input_msg.delete()
 # .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
+    @bot.on_callback_query(filters.regex("pdf_wateermark_command"))
+    async def pdf_watermark_button(client, callback_query):
+        user_id = callback_query.from_user.id
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
+        editable = await callback_query.message.edit(
+            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
+            f"📁 <u><b>Pdf Watermark Settings</b></u> 📁\n"
+            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
+            f"💦 <b>Send your Watermark Text\n"
+            f"✔️ Send /d to Skip</b>\n"
+            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
+            f"<blockquote>This feature is not working yet.\n"
+            f"Only settings save for future</blockquote>\n"
+            f"✪━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+        input_msg = await bot.listen(editable.chat.id)
+        try:
+            if input_msg.text.lower() == "/d":
+                globals.pdfwatermark = "/d"
+                await editable.edit(f"**Pdf Watermark Disabled ✅** !", reply_markup=keyboard)
+            else:
+                globals.pdfwatermark = input_msg.text
+                await editable.edit(f"Pdf Watermark `{globals.pdfwatermark}` enabled ✅!", reply_markup=keyboard)
+        except Exception as e:
+            await editable.edit(f"<b>❌ Failed to set pdf Watermark:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
+        finally:
+            await input_msg.delete()
+# .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
     @bot.on_callback_query(filters.regex("video_wateermark_command"))
     async def video_watermark(client, callback_query):
-        user_id = callback_query.from_user.id
+      user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
         editable = await callback_query.message.edit(
             f"✪━━━━━━━━━★━━━━━━━━━✪\n"
@@ -324,18 +364,7 @@ def register_settings_handlers(bot):
             await editable.edit(f"<b>❌ Failed to set Watermark:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
             await input_msg.delete()
-# .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
-    @bot.on_callback_query(filters.regex("pdf_wateermark_command"))
-    async def pdf_watermark_button(client, callback_query):
-      keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
-      caption = ("<b>⋅ This Feature is Not Working Yet ⋅</b>")
-      await callback_query.message.edit_media(
-        InputMediaPhoto(
-            media="https://envs.sh/GVI.jpg",
-            caption=caption
-        ),
-        reply_markup=keyboard
-      )
+            
 # .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
     @bot.on_callback_query(filters.regex("quality_command"))
     async def handle_quality(client, callback_query):
