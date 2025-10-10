@@ -135,22 +135,16 @@ async def drm_handler(bot: Client, m: Message):
             await m.delete()
             await input2.delete(True)
             try:
-                if raw_text2 == "144":
-                    res = "256x144"
-                elif raw_text2 == "240":
-                    res = "426x240"
-                elif raw_text2 == "360":
-                    res = "640x360"
-                elif raw_text2 == "480":
-                    res = "854x480"
-                elif raw_text2 == "720":
-                    res = "1280x720"
-                elif raw_text2 == "1080":
-                    res = "1920x1080" 
-                else: 
-                    res = "UN"
+                res = {
+                    "144": "256x144",
+                    "240": "426x240",
+                    "360": "640x360",
+                    "480": "854x480",
+                    "720": "1280x720",
+                    "1080": "1920x1080"
+                }.get(raw_text2, "UN")
             except Exception:
-                    res = "UN"
+                res = "UN"
             raw_text = '1'
             raw_text7 = '/d'
             channel_id = m.chat.id
