@@ -187,6 +187,12 @@ async def drm_handler(bot: Client, m: Message):
         thumb = "thumb.jpg"
     else:
         thumb = thumb
+
+    if pthumb.startswith("http://") or pthumb.startswith("https://"):
+        getstatusoutput(f"wget '{pthumb}' -O 'pthumb.jpg'")
+        pthumb = "pthumb.jpg"
+    else:
+        pthumb = pthumb
 #........................................................................................................................................................................................
     try:
         if m.document and raw_text == "1":
