@@ -73,24 +73,19 @@ async def drm_handler(bot: Client, m: Message):
         if "://" in i:
             url = i.split("://", 1)[1]
             links.append(i.split("://", 1))
-            if ".pdf" in url:
-                pdf_count += 1
-            elif url.endswith((".png", ".jpeg", ".jpg")):
-                img_count += 1
-            elif "v2" in url:
-                v2_count += 1
-            elif "mpd" in url:
-                mpd_count += 1
-            elif "m3u8" in url:
-                m3u8_count += 1
-            elif "drm" in url:
-                drm_count += 1
-            elif "youtu" in url:
-                yt_count += 1
-            elif "zip" in url:
-                zip_count += 1
-            else:
-                other_count += 1
+            pdf_count    += ".pdf" in url
+            img_count    += url.endswith((".png", ".jpeg", ".jpg"))
+            v2_count     += "v2" in url
+            mpd_count    += "mpd" in url
+            m3u8_count   += "m3u8" in url
+            drm_count    += "drm" in url
+            yt_count     += "youtu" in url
+            zip_count    += "zip" in url
+            other_count  += not any([
+                ".pdf" in url, url.endswith((".png", ".jpeg", ".jpg")),
+                "v2" in url, "mpd" in url, "m3u8" in url,
+                "drm" in url, "youtu" in url, "zip" in url
+            ])
                     
     if not links:
         await m.reply_text("<b>🔹Invalid Input.</b>")
