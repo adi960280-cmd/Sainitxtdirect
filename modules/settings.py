@@ -15,7 +15,7 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         caption = (
             f"⚙️ <b>Choose Button below to Set Settings</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("📝 Caption Style", callback_data="caption_style_command"), InlineKeyboardButton("🖋️ File Name", callback_data="file_name_command")],
@@ -40,7 +40,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"🖼️ <b>Choose Button below to set Thumbnail</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("🎥 Video", callback_data="viideo_thumbnail_command"), InlineKeyboardButton("📑 PDF", callback_data="pddf_thumbnail_command")],
@@ -61,7 +61,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"💦 <b>Choose Button below to set Watermark</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("🎥 Video", callback_data="video_wateermark_command"), InlineKeyboardButton("📑 PDF", callback_data="pdf_wateermark_command")],
@@ -81,7 +81,7 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         caption = (
             f"🔐 <b>Choose Button below to set Token</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✪"
+            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("Classplus", callback_data="cp_token_command")],
@@ -169,10 +169,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Video Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━━━━━━━━━━━━━✪\n"
             f"<blockquote><b>💵 Note - For document format send : /no</b></blockquote>", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
@@ -196,10 +196,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Pdf Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
@@ -220,10 +220,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Audio Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
@@ -244,10 +244,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
             f"🖼️ <u><b>Html Thumbnail Settings</b></u>\n"
-            f"✪━━━━━━━━━━━★━━━━━━━━━━━✪\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
@@ -268,10 +268,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]])
         editable = await callback_query.message.edit(
             f"✍️ <u><b>Credit Settings</b></u>\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"✪━━━━━━★━━━━━━✪\n"
             f"📝 <b>Send your Credit\n"
             f"✔️ Send /d for default</b>\n"
-            f"✪━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.lower() == "/d":
@@ -376,10 +376,10 @@ def register_settings_handlers(bot):
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
         editable = await callback_query.message.edit(
             f"🎥 <u><b>Video Watermark Settings</b></u> 🎥\n"
-            f"✪━━━━━━━━━━★★★━━━━━━━━━━✪\n"
+            f"✪━━━━━━━━━★★★━━━━━━━━━✪\n"
             f"💦 <b>Send your Watermark Text\n"
             f"✔️ Send /d to Skip watermark</b>\n"
-            f"✪━━━━━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
+            f"✪━━━━━━━━━━━━━━━━━━━━━━✪", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.lower() == "/d":
@@ -403,7 +403,7 @@ def register_settings_handlers(bot):
             f"━━━━━━━━━━━⚡━━━━━━━━━━━\n"
             f"🎮  `144`  |  `240`  |  `360`  |  `480`  |  `720`  |  `1080`\n"
             f"✔️ Send /d for default quality\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━", reply_markup=keyboard)
+            f"━━━━━━━━━━━━━━━━━━━━━━━━", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
             if input_msg.text.lower() == "144":
