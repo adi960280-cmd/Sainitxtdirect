@@ -32,7 +32,7 @@ async def text_to_txt(bot: Client, message: Message):
     with open(txt_file, 'w') as f:
         f.write(text_data)
         
-    await message.reply_document(document=txt_file, caption=f"`{custom_file_name}.txt`\n\n<blockquote>You can now download your content! 📥</blockquote>")
+    await message.reply_document(document=txt_file, caption=f"`{custom_file_name}.txt`\n<blockquote><b>You can now download your content! 📥</b></blockquote>")
     os.remove(txt_file)
 
 # Define paths for uploaded file and processed file
