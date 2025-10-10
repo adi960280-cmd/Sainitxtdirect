@@ -14,9 +14,6 @@ def register_settings_handlers(bot):
         first_name = callback_query.from_user.first_name
         user_id = callback_query.from_user.id
         caption = (
-            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
-            f"👑 <b>Welcome [{first_name}](tg://user?id={user_id})</b> 👑\n"
-            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"⚙️ <b>Choose Button below to Set Settings</b>\n"
             f"✪━━━━━━━━━━━━━━━━━━━━✪"
         )
@@ -42,14 +39,12 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         first_name = callback_query.from_user.first_name
         caption = (
-            f"✪━━━━━━━★━━━━━━━✪\n"
-            f"👑 <b>Welcome [{first_name}](tg://user?id={user_id})</b> 👑\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🖼️ <b>Choose Button below to set Thumbnail</b>\n"
             f"✪━━━━━━━━━━━━━━━━✪"
         )
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("🎥 Video", callback_data="viideo_thumbnail_command"), InlineKeyboardButton("📑 PDF", callback_data="pddf_thumbnail_command")],
+            [InlineKeyboardButton("🎵 Audio", callback_data="audio_thumbnail_command"), InlineKeyboardButton("🌐 Html", callback_data="html_thumbnail_command")],
             [InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]
         ])
         await callback_query.message.edit_media(
@@ -65,9 +60,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         first_name = callback_query.from_user.first_name
         caption = (
-            f"✪━━━━━━━★━━━━━━━✪\n"
-            f"👑 <b>Welcome [{first_name}](tg://user?id={user_id})</b> 👑\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"💦 <b>Choose Button below to set Watermark</b>\n"
             f"✪━━━━━━━━━━━━━━━━✪"
         )
@@ -88,9 +80,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         first_name = callback_query.from_user.first_name
         caption = (
-            f"✪━━━━━━━★━━━━━━━✪\n"
-            f"👑 <b>Welcome [{first_name}](tg://user?id={user_id})</b> 👑\n"
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔐 <b>Choose Button below to set Token</b>\n"
             f"✪━━━━━━━━━━━━━━━━✪"
         )
@@ -156,7 +145,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"✏️ <u><b>End Filename Settings</b></u>\n"
             f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"🖊️ <b>Send Ending file name\n"
@@ -180,7 +168,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🖼️ <u><b>Video Thumbnail Settings</b></u>\n"
             f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
@@ -208,7 +195,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"🖼️ <u><b>Pdf Thumbnail Settings</b></u>\n"
             f"✪━━━━━━━★━━━━━━━✪\n"
             f"🔗 <b>Send Thumbnail URL\n"
@@ -226,6 +212,54 @@ def register_settings_handlers(bot):
             await editable.edit(f"<b>❌ Failed to set pdf thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
         finally:
             await input_msg.delete()
+
+# .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
+    @bot.on_callback_query(filters.regex("audio_thumbnail_command"))
+    async def audio_thumbnail_button(client, callback_query):
+        user_id = callback_query.from_user.id
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
+        editable = await callback_query.message.edit(
+            f"🖼️ <u><b>Audio Thumbnail Settings</b></u>\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"🔗 <b>Send Thumbnail URL\n"
+            f"✔️ Send /d for default</b>\n"
+            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+        input_msg = await bot.listen(editable.chat.id)
+        try:
+            if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
+                globals.mthumb = input_msg.text
+                await editable.edit(f"✅ Audio Thumbnail set successfully from the URL !", reply_markup=keyboard)
+            else:
+                globals.mthumb = "/d"
+                await editable.edit(f"✅ Audio Thumbnail disabled !", reply_markup=keyboard)
+        except Exception as e:
+            await editable.edit(f"<b>❌ Failed to set audio thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
+        finally:
+            await input_msg.delete()
+
+# .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
+    @bot.on_callback_query(filters.regex("html_thumbnail_command"))
+    async def html_thumbnail_button(client, callback_query):
+        user_id = callback_query.from_user.id
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="thummbnail_command")]])
+        editable = await callback_query.message.edit(
+            f"🖼️ <u><b>Html Thumbnail Settings</b></u>\n"
+            f"✪━━━━━━━★━━━━━━━✪\n"
+            f"🔗 <b>Send Thumbnail URL\n"
+            f"✔️ Send /d for default</b>\n"
+            f"✪━━━━━━━━━━━━━━━━✪\n", reply_markup=keyboard)
+        input_msg = await bot.listen(editable.chat.id)
+        try:
+            if input_msg.text.startswith("http://") or input_msg.text.startswith("https://"):
+                globals.hthumb = input_msg.text
+                await editable.edit(f"✅ Html Thumbnail set successfully from the URL !", reply_markup=keyboard)
+            else:
+                globals.hthumb = "/d"
+                await editable.edit(f"✅ Html Thumbnail disabled !", reply_markup=keyboard)
+        except Exception as e:
+            await editable.edit(f"<b>❌ Failed to set html thumbnail:</b>\n<blockquote expandable>{str(e)}</blockquote>", reply_markup=keyboard)
+        finally:
+            await input_msg.delete()
             
 # .....,.....,.......,...,.......,....., .....,.....,.......,...,.......,.....,
     @bot.on_callback_query(filters.regex("add_credit_command"))
@@ -233,7 +267,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━★━━━━━━━✪\n"
             f"✍️ <u><b>Credit Settings</b></u>\n"
             f"✪━━━━━━━★━━━━━━━✪\n"
             f"📝 <b>Send your Credit\n"
@@ -257,7 +290,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="set_token_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━★━━━━━━✪\n"
             f"👑 <b>Classplus Token</b> 👑\n"
             f"✪━━━━━━★━━━━━━✪\n"
             f"🔐 <b>Send Your CP Token</b>\n"
@@ -276,7 +308,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="set_token_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"👑 <b>Physics Wallah Token</b> 👑\n"
             f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"🔐 <b>Send Your PW Token</b>\n"
@@ -295,7 +326,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="set_token_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"👑 <b>brightcove link Token</b> 👑\n"
             f"✪━━━━━━━━★━━━━━━━━✪\n"
             f"🔐 <b>Send brightcove link Token\n"
@@ -319,7 +349,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"📁 <u><b>Pdf Watermark Settings</b></u> 📁\n"
             f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"💦 <b>Send your Watermark Text\n"
@@ -346,7 +375,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="wattermark_command")]])
         editable = await callback_query.message.edit(
-            f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"🎥 <u><b>Video Watermark Settings</b></u> 🎥\n"
             f"✪━━━━━━━━━★━━━━━━━━━✪\n"
             f"💦 <b>Send your Watermark Text\n"
@@ -371,10 +399,9 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]])
         editable = await callback_query.message.edit(
-            f"━━━━━━━━━━━⚡━━━━━━━━━━━\n"
             f"🎥 <b>Enter Video Quality</b>\n"
             f"━━━━━━━━━━━⚡━━━━━━━━━━━\n"
-            f"🎮 `144` | `240` | `360` | `480` | `720` | `1080`\n"
+            f"🎮  `144`  |  `240`  |  `360`  |  `480`  |  `720`  |  `1080`\n"
             f"✔️ Send /d for default\n"
             f"━━━━━━━━━━━━━━━━━━━━━━━", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
@@ -424,7 +451,6 @@ def register_settings_handlers(bot):
         user_id = callback_query.from_user.id
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back to Settings", callback_data="setttings")]])
         editable = await callback_query.message.edit(
-            f"━━━━━━━━━━ ✦ ━━━━━━━━━━\n"
             f"✨ <b>Topic in Caption Settings</b> ✨\n"
             f"━━━━━━━━━━ ✦ ━━━━━━━━━━\n"
             f"✅ <u><b>Send</b></u> → /yes | ❌ Send</b></u> → /no\n"
