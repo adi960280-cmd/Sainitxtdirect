@@ -5,6 +5,7 @@ import asyncio
 import yt_dlp
 from pytube import YouTube
 from pyromod import listen
+from subprocess import getstatusoutput
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
@@ -142,7 +143,8 @@ def register_youtube_handlers(bot):
         except Exception as e:
             await m.reply_text(f"<b>Failed Reason:</b>\n<blockquote><b>{str(e)}</b></blockquote>")
         finally:
-            await m.reply_text("<blockquote><b>All YouTube Music Download Successfully</b></blockquote>")
+            if input.document and input.document.file_name.endswith(".txt"):
+                await m.reply_text("<blockquote><b>All YouTube Music Download Successfully</b></blockquote>")
  
 #========================================================================================================================================================================================================
     @bot.on_message(filters.command(["y2t"]))
