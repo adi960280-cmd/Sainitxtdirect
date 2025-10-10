@@ -30,11 +30,13 @@ async def drm_handler(bot: Client, m: Message):
     caption = globals.caption
     endfilename = globals.endfilename
     thumb = globals.thumb
+    pthumb = globals.pthumb
     CR = globals.CR
     cwtoken = globals.cwtoken
     cptoken = globals.cptoken
     pwtoken = globals.pwtoken
     vidwatermark = globals.vidwatermark
+    pdfwatermark = globals.pdfwatermark
     raw_text2 = globals.raw_text2
     quality = globals.quality
     res = globals.res
@@ -443,7 +445,10 @@ async def drm_handler(bot: Client, m: Message):
                                     with open(f'{namef}.pdf', 'wb') as file:
                                         file.write(response.content)
                                     await asyncio.sleep(retry_delay)  # Optional, to prevent spamming
-                                    copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1)
+                                    if pthumb == "/d":
+                                        copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1)
+                                    else:
+                                        copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1, thumb=pthumb)
                                     count += 1
                                     os.remove(f'{namef}.pdf')
                                     success = True
@@ -465,7 +470,10 @@ async def drm_handler(bot: Client, m: Message):
                             cmd = f'yt-dlp -o "{namef}.pdf" "{url}"'
                             download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                             os.system(download_cmd)
-                            copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1)
+                            if pthumb == "/d":
+                                copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1)
+                            else:
+                                copy = await bot.send_document(chat_id=channel_id, document=f'{namef}.pdf', caption=cc1, thumb=pthumb)
                             count += 1
                             os.remove(f'{namef}.pdf')
                         except FloodWait as e:
