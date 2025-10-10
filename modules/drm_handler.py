@@ -196,8 +196,7 @@ async def drm_handler(bot: Client, m: Message):
                 url = f"https://www.youtube.com/watch?v={video_id}"
                 if video_id:
                     thumb_url = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
-                    thumb_resp = requests.get(thumb_url)
-                    if thumb_resp.status_code != 200:
+                    if requests.get(thumb_url).status_code != 200:
                         thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
                     thumb = thumb_url
                 else:
@@ -205,18 +204,14 @@ async def drm_handler(bot: Client, m: Message):
                 if thumb.startswith("http://") or thumb.startswith("https://"):
                     getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
                     thumb = "thumb.jpg"
-
+                    
             if m.text:
                 if "youtu" in url:
                     oembed_url = f"https://www.youtube.com/oembed?url={url}&format=json"
-                    response = requests.get(oembed_url)
-                    oembed_data = response.json()
-                    audio_title = oembed_data.get('title', 'YouTube Video')
-                    audio_title = audio_title.replace("_", " ")
-                    name = name1 = namef = f'{audio_title[:60]}'
+                    audio_title = requests.get(oembed_url).json().get('title', 'YouTube Video').replace("_", " ")
+                    name = name1 = namef = audio_title[:60]
                 else:
-                    name = f'{name1[:60]}'
-                    namef = f'{name1[:60]}'
+                    name = namef = name1[:60]                    
             else:
                 if topic == "/yes":
                     raw_title = links[i][0]
