@@ -401,8 +401,15 @@ def register_settings_handlers(bot):
         editable = await callback_query.message.edit(
             f"🎥 <b>Enter Video Quality</b>\n"
             f"━━━━━━━━━━━⚡━━━━━━━━━━━\n"
-            f"🎮  `144`  |  `240`  |  `360`  |  `480`  |  `720`  |  `1080`\n"
-            f"✔️ Send /d for default quality\n"
+            f"┣\n"
+            f"┣⪼ 🎮 |  `144`  |  `480`  |  `1440`  |\n"
+            f"┣\n"
+            f"┣⪼ 🎥 |  `240`  |  `720`  |  `2160`  |\n"
+            f"┣\n"
+            f"┣⪼ 📷 |  `360`  |  `1080`  |  `4320`  |\n"
+            f"┣\n"
+            f"┣⪼ ✔️ Send /d for default quality\n"
+            f"┣\n"
             f"━━━━━━━━━━━━━━━━━━━━━━━━", reply_markup=keyboard)
         input_msg = await bot.listen(editable.chat.id)
         try:
@@ -435,6 +442,21 @@ def register_settings_handlers(bot):
                 globals.raw_text2 = '1080'
                 globals.quality = f"{globals.raw_text2}p"
                 globals.res = '1920x1080'
+                await editable.edit(f"✅ Video Quality set {globals.quality} !", reply_markup=keyboard)
+            elif input_msg.text.lower() == "1440":
+                globals.raw_text2 = '1440'
+                globals.quality = f"{globals.raw_text2}p"
+                globals.res = '2560x1440'
+                await editable.edit(f"✅ Video Quality set {globals.quality} !", reply_markup=keyboard)
+            elif input_msg.text.lower() == "2160":
+                globals.raw_text2 = '2160'
+                globals.quality = f"{globals.raw_text2}p"
+                globals.res = '3840x2160'
+                await editable.edit(f"✅ Video Quality set {globals.quality} !", reply_markup=keyboard)
+            elif input_msg.text.lower() == "4320":
+                globals.raw_text2 = '4320'
+                globals.quality = f"{globals.raw_text2}p"
+                globals.res = '7680x4320'
                 await editable.edit(f"✅ Video Quality set {globals.quality} !", reply_markup=keyboard)
             else:
                 globals.raw_text2 = '480'
