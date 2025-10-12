@@ -139,10 +139,13 @@ def register_youtube_handlers(bot):
                         await prog.delete(True)
                         await m.reply_text(f'⚠️**Downloading Failed**⚠️\n**Name** =>> `{str(count).zfill(3)} {name1}`\n**Url** =>> {url}', disable_web_page_preview=True)
                         count+=1
-                               
+                else:
+                    await m.reply_text(f"**⚠️ Line skipped: Not a YouTube link.**\n🔗** Url:** {url}")
+                    continue       
         except Exception as e:
             await m.reply_text(f"<b>Failed Reason:</b>\n<blockquote><b>{str(e)}</b></blockquote>")
         finally:
+            await input.delete(True)
             if input.document and input.document.file_name.endswith(".txt"):
                 await m.reply_text("<blockquote><b>All YouTube Music Download Successfully</b></blockquote>")
  
