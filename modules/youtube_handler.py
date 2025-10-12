@@ -11,6 +11,7 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from vars import CREDIT, cookies_file_path, AUTH_USERS
 import globals
+import saini as helper
 
 def register_youtube_handlers(bot):
 #==============================================================================================================================
@@ -127,16 +128,12 @@ def register_youtube_handlers(bot):
                     if os.path.exists(f'{name}.mp3'):
                         await prog.delete(True)
                         print(f"File {name}.mp3 exists, attempting to send...")
-                        if mthumb == "/d":
-                            if input.text:
-                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {name1}.mp3]({url})')
-                            else:
-                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}- {name1}.mp3]({url})')
-                        else:
-                            if input.text:
-                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {name1}.mp3]({url})', thumb=mthumb)
-                            else:
-                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}- {name1}.mp3]({url})', thumb=mthumb)
+                        
+                        caption = f'[🎵 {name1}.mp3]({url})' if input.text else f'[🎵 {str(count).zfill(3)}- {name1}.mp3]({url})'
+                        kwargs = {}
+                        if mthumb != "/d":
+                            kwargs['thumb'] = mthumb
+                        await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=caption, **kwargs)
                         os.remove(f'{name}.mp3')
                         count+=1
                     else:
