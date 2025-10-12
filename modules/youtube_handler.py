@@ -109,19 +109,17 @@ def register_youtube_handlers(bot):
                     return
                 Vxy = links[i][1].replace("www.youtube-nocookie.com/embed", "youtu.be")
                 url = "https://" + Vxy
+                video_id = helper.get_youtube_video_id(url)
+                url = f"https://www.youtube.com/watch?v={video_id}"
                 oembed_url = f"https://www.youtube.com/oembed?url={url}&format=json"
                 response = requests.get(oembed_url)
-                audio_title = response.json().get('title', 'YouTube Video')       
-                audio_title = audio_title.replace("_", " ")
-                name = f'{audio_title[:60]} {CREDIT}'        
-                name1 = f'{audio_title} {CREDIT}'
+                name1 = response.json().get('title', 'YouTube Video').replace("_", " ") 
+                name = f'{name1[:60]}'        
                 if mthumb.startswith("http://") or mthumb.startswith("https://"):
                     getstatusoutput(f"wget '{mthumb}' -O 'mthumb.jpg'")
                     mthumb = "mthumb.jpg"
-                else:
-                    mthumb = mthumb
 
-                if "youtube.com" in url or "youtu.be" in url:
+                if "youtu" in url:
                     prog = await m.reply_text(f"<i><b>Audio Downloading</b></i>\n<blockquote><b>{str(count).zfill(3)}) {name1}</b></blockquote>")
                     cmd = f'yt-dlp -x --audio-format mp3 --cookies {cookies_file_path} "{url}" -o "{name}.mp3"'
                     print(f"Running command: {cmd}")
@@ -130,9 +128,15 @@ def register_youtube_handlers(bot):
                         await prog.delete(True)
                         print(f"File {name}.mp3 exists, attempting to send...")
                         if mthumb == "/d":
-                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}. - {name1}.mp3]({url})')
+                            if input.text:
+                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {name1}.mp3]({url})')
+                            else:
+                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}- {name1}.mp3]({url})')
                         else:
-                            await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}. - {name1}.mp3]({url})', thumb=mthumb)
+                            if input.text:
+                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {name1}.mp3]({url})', thumb=mthumb)
+                            else:
+                                await bot.send_document(chat_id=m.chat.id, document=f'{name}.mp3', caption=f'[🎵 {str(count).zfill(3)}- {name1}.mp3]({url})', thumb=mthumb)
                         os.remove(f'{name}.mp3')
                         count+=1
                     else:
@@ -145,7 +149,6 @@ def register_youtube_handlers(bot):
         except Exception as e:
             await m.reply_text(f"<b>Failed Reason:</b>\n<blockquote><b>{str(e)}</b></blockquote>")
         finally:
-            await input.delete(True)
             if input.document and input.document.file_name.endswith(".txt"):
                 await m.reply_text("<blockquote><b>All YouTube Music Download Successfully</b></blockquote>")
  
